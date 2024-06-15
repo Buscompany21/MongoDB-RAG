@@ -22,8 +22,11 @@ export async function POST(req: NextRequest) {
       if (uploadedFile instanceof File) {
         fileName = uploadedFile.name.toLowerCase();
 
-        const tempFilePath = `/tmp/${fileName}.pdf`;
+        const tempFilePath = `C:\\tmp\\${fileName}`;
         const fileBuffer = Buffer.from(await uploadedFile.arrayBuffer());
+
+        // Ensure the directory exists
+        await fs.mkdir('C:\\tmp', { recursive: true });
 
         await fs.writeFile(tempFilePath, fileBuffer);
         let dataBuffer = fs.readFile(tempFilePath);
@@ -66,5 +69,6 @@ export async function POST(req: NextRequest) {
   }
 
 }
+
 
 
